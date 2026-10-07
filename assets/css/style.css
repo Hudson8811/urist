@@ -402,10 +402,11 @@ button:disabled { cursor: wait; opacity: .65; }
   .hero__button .button__icon { display: none; }
   .hero__quote { position: relative; top: auto; right: auto; display: block; margin: 22px auto 0; padding: 0; max-width: 260px; font-size: 14px; text-align: center; line-height: 1.3; }
   .hero__quote-mark { position: static; font-size: 20px; margin-right: 8px; line-height: 0; }
-  .stats__inner { min-height: 110px; gap: 0; padding-block: 14px; }
+  .stats__inner { grid-template-columns: .9fr .9fr 1.2fr; min-height: 110px; gap: 0; padding-block: 14px; }
   .stats__item { flex-direction: column; gap: 4px; padding-inline: 5px; min-height: 78px; }
   .stats__icon { width: 38px; height: 38px; }
   .stats__text { gap: 0; font-size: 13px; text-align: center; }
+  .stats__text--team { font-size: clamp(11px, 2.85vw, 13px); line-height: 1.25; }
   .stats__number { font-size: 16px; }
   .stats__desktop { display: none; }
   .about__inner { display: flex; flex-direction: column; gap: 0; }

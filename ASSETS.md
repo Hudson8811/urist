@@ -26,6 +26,16 @@
 
 > Use case: photorealistic-natural. Asset type: a single horizontal sprite strip of three fictional generic customer portrait photos for a website mockup. Output exactly 3:1 aspect ratio. Three equally sized SQUARE photo panels side-by-side, with absolutely no space, no borders or dividers between panels. Each head centered exactly in its own third, full head and shoulders visible, plain light warm gray background, subtle natural studio light. Left panel: friendly 38-year-old dark-haired man with a neat short dark beard, white shirt, navy blazer. Center panel: friendly 34-year-old woman with shoulder-length light brown hair in a cream blouse. Right panel: friendly 42-year-old clean-shaven dark-haired man with short haircut and navy suit, white shirt. Natural modest smiles, realistic editorial headshots. No text, no letters, no watermark.
 
-## Векторные материалы
+## Логотип и эмблема
 
-`logo.svg`, `icons.svg` и `map.svg` нарисованы для этой вёрстки. Логотип — приближение к предоставленному референсу. Карта условная; для точного маршрута служит ссылка на Яндекс Карты. Спрайт иконок из `icons.svg` также встроен в `index.html`, чтобы иконки работали при открытии HTML напрямую с диска.
+`assets/images/lion.png` — лев со щитом из предоставленного пользователем логотипа, фон и надписи удалены встроенным ImageGen. Изображение уменьшено и сжато для сайта с сохранением прозрачности.
+
+Итоговый запрос обработки:
+
+> Use case: background-extraction. Edit target: the attached gold Arsenal law firm logo. Extract ONLY the existing golden lion head inside its shield from the upper part of this exact image. Preserve the lion and shield geometry, facial details, flowing mane, gold tones and original proportions precisely. Remove ALL beige background including every negative space inside the shield and between the mane shapes, remove all lettering АРСЕНАЛ / ЮРИДИЧЕСКОЕ АГЕНТСТВО and all horizontal decorations below the emblem. The output must contain only the SAME lion-and-shield emblem on true transparent background, tightly framed with a small uniform transparent margin, fully visible with no clipping. Do not redesign, simplify, add strokes, add text, add shadows on the background, or change the emblem silhouette. Clean alpha edges suitable for a dark navy website header.
+
+`assets/images/logo.svg` — готовый горизонтальный логотип для шапки и подвала. Эмблема встроена в файл, надписи векторные. Размер нижней строки увеличен с 7,3 до 11,4 единицы; обе строки имеют ширину 193 единицы и совпадающие правые края.
+
+## Другие векторные материалы
+
+`icons.svg` и `map.svg` нарисованы для этой вёрстки. Карта условная; для точного маршрута служит ссылка на Яндекс Карты. Спрайт иконок из `icons.svg` также встроен в `index.html`, чтобы иконки работали при открытии HTML напрямую с диска.

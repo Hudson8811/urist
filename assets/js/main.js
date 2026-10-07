@@ -218,7 +218,7 @@
         form.reset();
       } catch {
         status.classList.add('lead-form__status--error');
-        status.textContent = 'Не удалось отправить заявку. Попробуйте ещё раз или позвоните: +7 (812) 467-30-50.';
+        status.textContent = 'Не удалось отправить заявку. Попробуйте ещё раз или позвоните: +7 (812) 407-14-31.';
       } finally {
         window.clearTimeout(timeout);
         submit.disabled = false;
