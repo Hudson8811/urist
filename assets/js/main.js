@@ -168,26 +168,164 @@
   });
 
   function phoneDigits(value) {
-    let digits = value.replace(/\D/g, '');
-    if (digits.length === 11 && /^[78]/.test(digits)) digits = digits.slice(1);
-    return digits;
+    return value.replace(/\D/g, '');
+  }
+
+  function parsePhone(value) {
+    const text = value.trim();
+    if (/[^\d\s()+.\-\u2010-\u2015]/.test(text)) {
+      return { error: 'Введите номер без букв и посторонних символов.' };
+    }
+    if (text.includes('+') && !/^\+7[^+]*$/.test(text)) {
+      return { error: 'Используйте номер с кодом +7.' };
+    }
+    let digits = phoneDigits(text);
+    if (text.startsWith('+7') || (digits.length === 11 && /^[78]/.test(digits))) {
+      digits = digits.slice(1);
+    }
+    if (digits.length > 10) return { error: 'После +7 должно быть 10 цифр. Проверьте номер.' };
+    return { digits };
+  }
+
+  function formatPhone(digits) {
+    if (!digits) return '';
+    let value = `(${digits.slice(0, 3)}`;
+    if (digits.length >= 3) value += ')';
+    if (digits.length > 3) value += ` ${digits.slice(3, 6)}`;
+    if (digits.length > 6) value += `-${digits.slice(6, 8)}`;
+    if (digits.length > 8) value += `-${digits.slice(8, 10)}`;
+    return value;
+  }
+
+  function phoneCaret(value, digitIndex) {
+    let position = 0;
+    let count = 0;
+    while (position < value.length && count < digitIndex) {
+      if (/\d/.test(value[position])) count += 1;
+      position += 1;
+    }
+    while (position < value.length && /\D/.test(value[position])) position += 1;
+    return position;
   }
 
   document.querySelectorAll('[data-lead-form]').forEach(form => {
     const phone = form.elements.phone;
     const status = form.querySelector('.lead-form__status');
     const submit = form.querySelector('[type="submit"]');
-    phone.addEventListener('input', () => phone.setCustomValidity(''));
-    phone.addEventListener('blur', () => {
+    const phoneField = phone.closest('.phone-field');
+    const phoneError = document.getElementById(`${phone.id}-error`);
+    let lastPhoneValue = '';
+    let rejectedInput = '';
+    let showPhoneError = false;
+
+    function validatePhone(showError = showPhoneError) {
       const digits = phoneDigits(phone.value);
-      if (digits.length === 10) phone.value = `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 8)}-${digits.slice(8, 10)}`;
+      let message = rejectedInput;
+      if (!message && !digits) message = 'Введите номер телефона.';
+      else if (!message && digits.length !== 10) message = 'Введите номер полностью: 10 цифр после +7.';
+      else if (!message && (!/^[3489]/.test(digits) || /^(\d)\1{9}$/.test(digits))) {
+        message = 'Проверьте номер. Например: +7 (812) 407-14-31.';
+      }
+      showPhoneError = showError;
+      phone.setCustomValidity(message);
+      const visibleError = showError && Boolean(message);
+      phone.setAttribute('aria-invalid', String(visibleError));
+      phoneField.classList.toggle('phone-field--invalid', visibleError);
+      phoneError.textContent = visibleError ? message : '';
+      return !message;
+    }
+
+    function writePhone(digits, caretIndex = digits.length) {
+      phone.value = formatPhone(digits);
+      lastPhoneValue = phone.value;
+      rejectedInput = '';
+      if (document.activeElement === phone) {
+        const caret = phoneCaret(phone.value, caretIndex);
+        phone.setSelectionRange(caret, caret);
+      }
+      if (!form.hasAttribute('aria-busy')) status.textContent = '';
+      validatePhone();
+    }
+
+    function rejectPhone(message) {
+      phone.value = lastPhoneValue;
+      rejectedInput = message;
+      validatePhone(true);
+    }
+
+    function insertPhone(digits, pasted = false) {
+      const current = phoneDigits(phone.value);
+      const start = phoneDigits(phone.value.slice(0, phone.selectionStart)).length;
+      const end = phoneDigits(phone.value.slice(0, phone.selectionEnd)).length;
+      let next = current.slice(0, start) + digits + current.slice(end);
+      let caret = start + digits.length;
+      // Код +7 уже виден слева; полные вставленные номера разбирает parsePhone.
+      if (!current && next === '7') {
+        next = next.slice(1);
+        caret -= 1;
+      }
+      if (next.length > 10) {
+        if (pasted) rejectPhone('После +7 должно быть 10 цифр. Проверьте номер.');
+        return;
+      }
+      writePhone(next, Math.max(0, caret));
+    }
+
+    phone.addEventListener('beforeinput', event => {
+      if (!event.cancelable || event.isComposing) return;
+      if (event.inputType === 'insertText') {
+        event.preventDefault();
+        if ((event.data || '').length > 1) {
+          const parsed = parsePhone(event.data);
+          if (parsed.error) rejectPhone(parsed.error);
+          else insertPhone(parsed.digits, true);
+        } else if (/^\d$/.test(event.data || '')) insertPhone(event.data);
+      } else if (['deleteContentBackward', 'deleteContentForward', 'deleteByCut'].includes(event.inputType)) {
+        event.preventDefault();
+        const digits = phoneDigits(phone.value);
+        let start = phoneDigits(phone.value.slice(0, phone.selectionStart)).length;
+        let end = phoneDigits(phone.value.slice(0, phone.selectionEnd)).length;
+        if (phone.selectionStart === phone.selectionEnd) {
+          if (event.inputType === 'deleteContentBackward') start = Math.max(0, start - 1);
+          else end = Math.min(digits.length, end + 1);
+        }
+        writePhone(digits.slice(0, start) + digits.slice(end), start);
+      }
     });
+    phone.addEventListener('paste', event => {
+      if (!event.clipboardData) return;
+      event.preventDefault();
+      const parsed = parsePhone(event.clipboardData.getData('text'));
+      if (parsed.error) rejectPhone(parsed.error);
+      else insertPhone(parsed.digits, true);
+    });
+    // Автозаполнение и клавиатуры, не поддерживающие beforeinput.
+    function normalizePhoneInput(event) {
+      if (event.isComposing) return;
+      const caret = phoneDigits(phone.value.slice(0, phone.selectionStart)).length;
+      const parsed = parsePhone(phone.value);
+      if (parsed.error) rejectPhone(parsed.error);
+      else writePhone(parsed.digits, caret - (phoneDigits(phone.value).length - parsed.digits.length));
+    }
+    phone.addEventListener('input', normalizePhoneInput);
+    phone.addEventListener('compositionend', normalizePhoneInput);
+    phone.addEventListener('blur', () => validatePhone(true));
+    phone.addEventListener('invalid', () => validatePhone(true));
+    form.addEventListener('reset', () => {
+      queueMicrotask(() => {
+        lastPhoneValue = phone.value;
+        rejectedInput = '';
+        validatePhone(false);
+      });
+    });
+    const initialPhone = parsePhone(phone.value);
+    if (initialPhone.error) rejectPhone(initialPhone.error);
+    else writePhone(initialPhone.digits);
 
     form.addEventListener('submit', async event => {
       event.preventDefault();
       const digits = phoneDigits(phone.value);
-      if (digits.length !== 10 || !/^[3489]/.test(digits)) {
-        phone.setCustomValidity('Введите корректный номер: 10 цифр после +7.');
+      if (!validatePhone(true)) {
         phone.reportValidity();
         return;
       }

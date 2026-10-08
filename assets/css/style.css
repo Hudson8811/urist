@@ -188,6 +188,8 @@ button:disabled { cursor: wait; opacity: .65; }
 .lead-form__hint { margin: 0 0 7px; color: var(--blue); font-size: 14px; }
 .phone-field { display: flex; align-items: center; min-height: 43px; border: 1px solid #c9d4de; border-radius: 5px; background: #fff; box-shadow: 0 2px 5px #092d4620; overflow: hidden; }
 .phone-field:focus-within { outline: 2px solid var(--gold); outline-offset: 2px; }
+.phone-field--invalid { border-color: #a02828; }
+.phone-field--invalid:focus-within { outline-color: #a02828; }
 .phone-field__prefix { display: flex; align-items: center; justify-content: center; gap: 14px; min-height: 30px; padding-inline: 14px; border-right: 1px solid var(--line); font-weight: 700; font-size: 16px; }
 .phone-field__flag { display: block; width: 24px; height: 15px; background: linear-gradient(#fff 0 33%, #064ac9 33% 66%, #ed1b35 66%); box-shadow: 0 0 0 1px #e7ebef; }
 .phone-field__input { width: 100%; min-width: 0; padding: 10px 15px; border: 0; outline: 0; background: transparent; color: var(--navy); font-size: 18px; }
@@ -201,6 +203,8 @@ button:disabled { cursor: wait; opacity: .65; }
 .lead-form__status:empty { display: none; }
 .lead-form__status { margin-top: 12px; color: #23513f; font-size: 14px; line-height: 1.4; }
 .lead-form__status--error { color: #a02828; }
+.lead-form__error { min-height: 1.4em; margin-top: 6px; color: #a02828; font-size: 12px; line-height: 1.4; }
+.lead-form__error:empty { visibility: hidden; }
 .lead-form__input { width: 100%; min-height: 46px; padding: 12px 14px; border: 1px solid #c9d4de; border-radius: 5px; background: #fff; color: var(--navy); font-size: 16px; }
 .lead-form__input--textarea { resize: vertical; min-height: 80px; max-height: 220px; }
 .lead-form__required { color: #a85c00; }
@@ -487,6 +491,7 @@ button:disabled { cursor: wait; opacity: .65; }
   .modal { max-height: calc(100dvh - 24px); }
 }
 @media (max-width: 479px) {
+  .lead-form__error { min-height: 2.8em; }
   .container { width: calc(100% - 36px); }
   .header__inner { gap: 21px; }
   .header__logo { width: 170px; }
