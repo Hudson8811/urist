@@ -247,11 +247,11 @@ button:disabled { cursor: wait; opacity: .65; }
 .footer__phone { margin-left: auto; }
 .footer__phone .contact-phone__number { font-size: 16px; }
 .footer__contact { margin-left: auto; color: #fff; border-color: #13537d; background: #0b4167; }
-.footer__bottom { display: flex; align-items: center; gap: 32px; padding-block: 5px 10px; color: #b3c5d7; font-size: 12px; }
-.footer__copyright { margin-right: auto; }
+.footer__bottom { display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; align-items: center; gap: 32px; padding-block: 5px 10px; color: #b3c5d7; font-size: 12px; }
 .footer__link { padding: 0; background: transparent; color: inherit; font-size: inherit; }
+.footer__link--privacy { justify-self: center; text-align: center; }
 .footer__link:hover { color: #ffcd70; }
-.footer__top { margin-left: auto; }
+.footer__top { justify-self: end; }
 
 /* Диалог, нативное удержание фокуса и Escape */
 .modal { width: min(520px, calc(100% - 32px)); max-height: calc(100dvh - 40px); margin: auto; padding: 0; border: 1px solid #e0d0ae; border-radius: 12px; color: var(--navy); background: #fff; box-shadow: 0 24px 100px #00142355; }
@@ -380,7 +380,7 @@ button:disabled { cursor: wait; opacity: .65; }
   .contacts__map { grid-column: 1 / -1; height: 190px; }
   .contacts__photo { max-height: 190px; }
   .footer__tagline { display: none; }
-  .footer__bottom { flex-wrap: wrap; gap: 10px 25px; }
+  .footer__bottom { gap: 10px 25px; }
 }
 @media (max-width: 767px) {
   .pricing__benefits { gap: 14px; padding: 14px 16px; }
@@ -500,9 +500,9 @@ button:disabled { cursor: wait; opacity: .65; }
   .footer__phone { margin: 0; }
   .footer__phone .contact-phone__icon { width: 22px; height: 22px; }
   .footer__contact { margin-left: auto; }
-  .footer__bottom { margin-top: 15px; gap: 13px 20px; font-size: 11px; }
-  .footer__copyright { flex-basis: 100%; }
-  .footer__top { margin-left: 0; }
+  .footer__bottom { grid-template-columns: 1fr auto; margin-top: 15px; gap: 13px 20px; font-size: 11px; }
+  .footer__copyright { grid-column: 1 / -1; text-align: center; }
+  .footer__link--privacy { grid-column: 1 / -1; }
   .modal__inner { padding: 27px 24px; }
   .modal__title { font-size: 27px; }
   .modal { max-height: calc(100dvh - 24px); }
