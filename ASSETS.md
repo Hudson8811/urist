@@ -1,6 +1,6 @@
 # Изображения
 
-Фотография бизнес-центра «Меридиан» предоставлена пользователем. Остальные растровые иллюстрации созданы встроенным ImageGen, затем перекодированы в WebP. Внешних фотостоков и удалённых изображений нет. Люди на портретах вымышленные; это иллюстрации для макета.
+Фотографии офиса и бизнес-центра предоставлены пользователем. Четыре фотографии галереи осветлены встроенным ImageGen; снимок входа в офис сохранён без ретуши. Остальные растровые иллюстрации созданы встроенным ImageGen, затем перекодированы в WebP. Внешних фотостоков и удалённых изображений нет. Люди на портретах вымышленные; это иллюстрации для макета.
 
 ## `assets/images/saint-petersburg.webp`
 
@@ -16,7 +16,38 @@
 
 ## `assets/images/office-meridian.webp`
 
-452 × 800 px. Фотография входа в бизнес-центр «Меридиан» предоставлена пользователем. Сохранена в WebP без генерации, ретуши и изменения размеров. В блоке контактов CSS кадрирует вертикальный снимок с сохранением вывески.
+452 × 800 px. Фотография входа в бизнес-центр «Меридиан» предоставлена пользователем. Сохранена в WebP без генерации, ретуши и изменения размеров. Прежняя обложка контактов; оставлена в материалах проекта.
+
+## Галерея офиса — `assets/images/gallery/`
+
+Пять фотографий предоставлены пользователем 12 октября 2026 года. Все файлы находятся локально, формат WebP, качество 88. Для открытия галереи используется локальная PhotoSwipe 5.4.4 под лицензией MIT, файлы библиотеки и лицензия — в `assets/vendor/photoswipe/`.
+
+| Файл | Размер | Обработка |
+| --- | --- | --- |
+| `entrance.webp` | 1280 × 720 | Оригинал входа в офис: только перекодирование в WebP. Табличка и номер офиса сохранены. |
+| `entrance-preview.webp` | 800 × 450 | Уменьшенная обложка из того же оригинала. |
+| `consultation-room.webp` | 1448 × 1086 | Встроенный ImageGen: коррекция освещения и цвета. |
+| `office.webp` | 1448 × 1086 | Встроенный ImageGen: коррекция освещения и цвета. |
+| `lobby.webp` | 1086 × 1448 | Встроенный ImageGen: осветление тёмных участков холла. |
+| `staircase.webp` | 1086 × 1448 | Встроенный ImageGen: осветление тёмных участков лестницы. |
+
+Режим обработки: встроенный инструмент ImageGen, по одному исходному фото на запрос; CLI не использовался. Итоговые запросы приведены ниже. Полученные изображения отобраны визуально. Обработанный вариант входа отклонён из-за искажения номера на табличке, на сайте используется исходное фото.
+
+### `consultation-room.webp`
+
+> Use case: lighting-weather. Edit target: the supplied real photograph for a law-firm office gallery. Landscape 4:3 photograph of a small consultation office, desk, printer, coffee machine, fridge and black chairs. Preserve every object, exact positions, wall texture, window view and perspective. Apply restrained professional photographic exposure and white-balance correction only: slightly brighter, neutral realistic colours, clear midtone details, restrained contrast, natural shadows, no HDR halos, no oversharpening, no oversaturation. Preserve original framing, aspect ratio, geometry, architectural lines, scene, objects and all text precisely. Do not add, remove, redesign, clean away, retouch or reconstruct anything. This must remain a truthful photograph of the same real premises, not a generated replacement. Output a single corrected photograph, no collage, no borders, no labels.
+
+### `office.webp`
+
+> Use case: lighting-weather. Edit target: the supplied real photograph for a law-firm office gallery. Landscape 4:3 photograph of a larger office with desks, black sofa, plants and wide corner windows. Lift underexposed desks and floor gently; preserve all furniture, windows, outdoor buildings and the exact arrangement. Apply restrained professional photographic exposure and white-balance correction only: slightly brighter, neutral realistic colours, clear midtone details, restrained contrast, natural shadows, no HDR halos, no oversharpening, no oversaturation. Preserve original framing, aspect ratio, geometry, architectural lines, scene, objects and all text precisely. Do not add, remove, redesign, clean away, retouch or reconstruct anything. This must remain a truthful photograph of the same real premises, not a generated replacement. Output a single corrected photograph, no collage, no borders, no labels.
+
+### `lobby.webp`
+
+> Use case: lighting-weather. Edit target: the supplied real photograph for a law-firm office gallery. Portrait photograph of the business-centre lobby with elevators and a mirrored ceiling. The top half is a real ceiling reflection; do not rotate it, remove it or reinterpret it as an extra floor. Raise dark elevator shadows mildly while retaining reflective surfaces. Apply restrained professional photographic exposure and white-balance correction only: slightly brighter, neutral realistic colours, clear midtone details, restrained contrast, natural shadows, no HDR halos, no oversharpening, no oversaturation. Preserve original framing, aspect ratio, geometry, architectural lines, scene, objects and all text precisely. Do not add, remove, redesign, clean away, retouch or reconstruct anything. This must remain a truthful photograph of the same real premises, not a generated replacement. Output a single corrected photograph, no collage, no borders, no labels.
+
+### `staircase.webp`
+
+> Use case: lighting-weather. Edit target: the supplied real photograph for a law-firm office gallery. Portrait photograph of a spiral staircase with a mirrored ceiling and tall windows. Preserve every stair, railing, reflection and window. Lift dark interior shadows enough for the stairs to be readable, keep window highlights natural. Apply restrained professional photographic exposure and white-balance correction only: slightly brighter, neutral realistic colours, clear midtone details, restrained contrast, natural shadows, no HDR halos, no oversharpening, no oversaturation. Preserve original framing, aspect ratio, geometry, architectural lines, scene, objects and all text precisely. Do not add, remove, redesign, clean away, retouch or reconstruct anything. This must remain a truthful photograph of the same real premises, not a generated replacement. Output a single corrected photograph, no collage, no borders, no labels.
 
 
 ## `assets/images/portraits.webp`

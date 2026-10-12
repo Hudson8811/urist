@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "photos": 5,
+  "checks": [
+    "dimensions",
+    "desktop arrows and loop",
+    "keyboard arrows and Escape",
+    "zoom",
+    "focus trap and return",
+    "close button and background",
+    "mobile swipe",
+    "mobile zoom",
+    "320px and landscape",
+    "offline file",
+    "no-JavaScript fallback"
+  ],
+  "errors": [],
+  "externalRequests": []
+}
